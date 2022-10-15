@@ -1,8 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./App.css";
 import { Button, Card, Form } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
+import api from "./api";
+import {
+  useQuery,
+  useMutation,
+  useQueryClient,
+  QueryClient,
+  QueryClientProvider,
+} from 'react-query';
+import axios from 'axios'
 
 function Todo({ todo, index, markTodo, removeTodo }) {
   return (
@@ -22,10 +30,15 @@ function Todo({ todo, index, markTodo, removeTodo }) {
 function FormTodo({ addTodo }) {
   const [value, setValue] = React.useState("");
 
+ 
+
   const handleSubmit = e => {
     e.preventDefault();
     if (!value) return;
+    console.log(value)
     addTodo(value);
+
+
     setValue("");
   };
 
@@ -43,6 +56,10 @@ function FormTodo({ addTodo }) {
 }
 
 function App() {
+  var baseUrl = axios.defaults.baseURL = 'http://156.67.217.219:2109';
+  axios.defaults.headers.common['Authorization'] = 'Bearer N1CAcmOkUejmMoJpvGYgsm7y5zGUQVm2';
+  axios.defaults.headers.get['Content-Type'] = 'application/json';
+  axios.defaults.method = 'get';
   const [todos, setTodos] = React.useState([
     {
       text: "This is a sampe todo",
@@ -50,8 +67,22 @@ function App() {
     }
   ]);
 
+
+  const gettodo = async ()=>{
+    await axios.get('/Demo/').then((res)=>{
+      console.log(res.data)
+    }).catch((err)=>{
+      console.log(err)
+    })
+  }
+
+  useEffect(()=>{
+    gettodo();
+  },[])
+
   const addTodo = text => {
     const newTodos = [...todos, { text }];
+    console.log(newTodos)
     setTodos(newTodos);
   };
 
