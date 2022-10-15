@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import "./App.css";
 import { Button, Card, Form } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import api from "./api";
+
 import {
   useQuery,
   useMutation,
@@ -56,7 +56,7 @@ function FormTodo({ addTodo }) {
 }
 
 function App() {
-  var baseUrl = axios.defaults.baseURL = 'http://156.67.217.219:2109';
+  var baseUrl = axios.defaults.baseURL = 'http://156.67.217.219:2109/items';
   axios.defaults.headers.common['Authorization'] = 'Bearer N1CAcmOkUejmMoJpvGYgsm7y5zGUQVm2';
   axios.defaults.headers.get['Content-Type'] = 'application/json';
   axios.defaults.method = 'get';
